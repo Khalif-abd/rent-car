@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+    php-fpm:
+        container_name: rent-car-php-fpm
+        build:
+            context: docker/php-fpm
+        volumes:
+            - ./:/var/www
+            - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
+        depends_on:
+            - db
+    nginx:
+        container_name: rent-car-nginx
+        build:
+            context: docker/nginx
+        volumes:
+            - ./:/var/www
+        ports:
+            - "80:80"
+        depends_on:
+            - php-fpm
+
+    db:
+        image: postgres:latest
+        container_name: rent-car-postgres
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=root
+            - POSTGRES_DB=db
+
