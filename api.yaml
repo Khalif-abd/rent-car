@@ -1,0 +1,420 @@
+openapi: 3.0.3
+info:
+  title: Аренда автомобилей
+  description: Аренда автомобилей
+  version: 1.0.0
+servers:
+  - url: http://localhost/api
+paths:
+  /rent-car/{user_id}/{car_id}:
+    get:
+      tags:
+        - rent
+      summary: Арендует автомобиль
+      operationId: setRentStatus
+      parameters:
+        - name: user_id
+          in: path
+          description: Id пользователя
+          required: true
+          schema:
+            type: string
+        - name: car_id
+          in: path
+          description: Id автомобиля
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: successful operation
+  /get-rent-status/{user_id}/{car_id}:
+    get:
+      tags:
+        - rent
+      summary: Возравщает статус автомобиля
+      operationId: getRentStatus
+      parameters:
+        - name: user_id
+          in: path
+          description: Id пользователя
+          required: true
+          schema:
+            type: string
+        - name: car_id
+          in: path
+          description: Id автомобиля
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: successful operation
+  /complete-lese-car/{car_id}:
+    get:
+      tags:
+        - rent
+      summary: Завершает аренду автомобиля
+      operationId: completeLeseCar
+      parameters:
+        - name: car_id
+          in: path
+          description: Id автомобиля
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: successful operation
+  /users:
+    get:
+      tags:
+        - users
+      summary: Возравщает список всех пользователей
+      operationId: getUsers
+      responses:
+        default:
+          description: successful operation
+    post:
+      tags:
+        - users
+      summary: Создание пользователя
+      description: Создание пользователя
+      operationId: createUsers
+      parameters:
+        - name: email
+          in: query
+          description: email
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: name
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+        default:
+          description: successful operation
+  /users/{user_id}:
+    get:
+      tags:
+        - users
+      summary: Получение пользователя по id
+      description: ""
+      operationId: loginUser
+      parameters:
+        - name: user_id
+          in: path
+          description: Id пользователя
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+    put:
+      tags:
+        - users
+      summary: Обновление пользователя
+      operationId: updateUser
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        default:
+          description: successful operation
+    delete:
+      tags:
+        - users
+      summary: Удаление пользователя
+      operationId: deleteUser
+      parameters:
+        - name: user_id
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+  /cars:
+    get:
+      tags:
+        - cars
+      summary: Возравщает список всех автомобилей
+      operationId: getcars
+      responses:
+        default:
+          description: successful operation
+    post:
+      tags:
+        - cars
+      summary: Добавление автомобиля
+      operationId: createcars
+      parameters:
+        - name: model_id
+          in: query
+          description: Id модели автомобиля
+          required: true
+          schema:
+            type: string
+        - name: number
+          in: query
+          description: Гос. номер авто
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+  /cars/{car_id}:
+    get:
+      tags:
+        - cars
+      summary: Получение автомобиля по id
+      operationId: getCar
+      parameters:
+        - name: car_id
+          in: path
+          description: Id автомобиля
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+    put:
+      tags:
+        - cars
+      summary: Обновление автомобиля
+      operationId: updateCar
+      parameters:
+        - name: car_id
+          in: path
+          description: Id пользователя
+          required: true
+          schema:
+            type: string
+        - name: model_id
+          in: query
+          description: Id модели автомобиля
+          required: false
+          schema:
+            type: string
+        - name: number
+          in: query
+          description: Гос. номер авто
+          required: false
+          schema:
+            type: string
+      responses:
+        default:
+          description: successful operation
+    delete:
+      tags:
+        - cars
+      summary: Удаление автомобиля
+      operationId: deleteCar
+      parameters:
+        - name: car_id
+          in: path
+          description: Удаление автомобиля
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+  /car-models:
+    get:
+      tags:
+        - car-models
+      summary: Возравщает список всех моделей
+      operationId: getCarModels
+      responses:
+        default:
+          description: successful operation
+    post:
+      tags:
+        - car-models
+      summary: Добавление модели автомобиля
+      operationId: createCarModel
+      parameters:
+        - name: brand_id
+          in: query
+          description: id бренда
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Имя модели
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+  /car-models/{car_model}:
+    get:
+      tags:
+        - car-models
+      summary: Получение автомобиля по id
+      operationId: getCarModel
+      parameters:
+        - name: car_model
+          in: path
+          description: Id модели
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+    put:
+      tags:
+        - car-models
+      summary: Обновление модели автомобиля
+      operationId: updateCarModel
+      parameters:
+        - name: car_model
+          in: path
+          description: Id модели
+          required: true
+          schema:
+            type: string
+        - name: brand_id
+          in: query
+          description: Id бренда
+          required: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Имя модели
+          required: false
+          schema:
+            type: string
+      responses:
+        default:
+          description: successful operation
+    delete:
+      tags:
+        - car-models
+      summary: Удаление модели
+      operationId: deleteCarModel
+      parameters:
+        - name: car_model
+          in: path
+          description: Удаление модели
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+  /car-brands:
+    get:
+      tags:
+        - car-brands
+      summary: Возравщает список всех брендов
+      operationId: getCarBrands
+      responses:
+        default:
+          description: successful operation
+    post:
+      tags:
+        - car-brands
+      summary: Добавление бренда автомобиля
+      operationId: createCarBrand
+      parameters:
+        - name: name
+          in: query
+          description: Имя бренда
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+  /car-brands/{car_brand}:
+    get:
+      tags:
+        - car-brands
+      summary: Получение бренда по id
+      operationId: getCarBrand
+      parameters:
+        - name: car_brand
+          in: path
+          description: Id бренда
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+    put:
+      tags:
+        - car-brands
+      summary: Обновление бренда автомобиля
+      operationId: updateCarBrand
+      parameters:
+        - name: car_brand
+          in: path
+          description: Id бренда
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Имя Бренда
+          required: false
+          schema:
+            type: string
+      responses:
+        default:
+          description: successful operation
+    delete:
+      tags:
+        - car-brands
+      summary: Удаление бренда
+      operationId: deleteCarBrand
+      parameters:
+        - name: car_brand
+          in: path
+          description: Id бренда
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
